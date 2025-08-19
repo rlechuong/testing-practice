@@ -13,4 +13,23 @@ function reverseString(string) {
   return reversedWord;
 }
 
-export { capitalize, reverseString };
+const calculator = {
+  add: function add(num1, num2) {
+    return num1 + num2;
+  },
+  subtract: function subtract(num1, num2) {
+    return num1 - num2;
+  },
+  multiply: function multiply(num1, num2) {
+    return num1 * num2;
+  },
+  divide: function divide(num1, num2) {
+    return num1 / num2;
+  },
+};
+
+function caesarCipher(string) {
+  return "bcd";
+}
+
+export { capitalize, reverseString, calculator, caesarCipher };
