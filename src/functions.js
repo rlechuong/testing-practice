@@ -1,96 +1,72 @@
 function capitalize(string) {
-  const word = string;
-  const firstCharCapitalized = word.charAt(0).toUpperCase();
-  const capitalizedWord = firstCharCapitalized + word.slice(1);
-  return capitalizedWord;
+  return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
 function reverseString(string) {
-  const word = string;
-  const wordArray = word.split("");
-  const reversedWordArray = wordArray.reverse();
-  const reversedWord = reversedWordArray.join("");
-  return reversedWord;
+  return string.split("").reverse().join("");
 }
 
 const calculator = {
-  add: function add(num1, num2) {
+  add(num1, num2) {
     return num1 + num2;
   },
-  subtract: function subtract(num1, num2) {
+  subtract(num1, num2) {
     return num1 - num2;
   },
-  multiply: function multiply(num1, num2) {
+  multiply(num1, num2) {
     return num1 * num2;
   },
-  divide: function divide(num1, num2) {
+  divide(num1, num2) {
     return num1 / num2;
   },
 };
 
 function caesarCipher(string, shiftFactor) {
-  const moduloShiftFactor = shiftFactor % 26;
+  let moduloShiftFactor = shiftFactor % 26;
+  if (moduloShiftFactor < 0) {
+    moduloShiftFactor += 26;
+  }
+
   let cipheredWord = "";
+
   for (let i = 0; i < string.length; i++) {
     const ASCIICode = string.charCodeAt(i);
+
     if (ASCIICode >= 97 && ASCIICode <= 122) {
-      cipheredWord += cipherLowerCase(ASCIICode, moduloShiftFactor);
+      cipheredWord += shiftedCharacter(ASCIICode, moduloShiftFactor, 97, 122);
     } else if (ASCIICode >= 65 && ASCIICode <= 90) {
-      cipheredWord += cipherUpperCase(ASCIICode, moduloShiftFactor);
+      cipheredWord += shiftedCharacter(ASCIICode, moduloShiftFactor, 65, 90);
     } else {
-      cipheredWord += string.charAt(i);
+      cipheredWord += string[i];
     }
   }
 
   return cipheredWord;
 }
 
-function cipherUpperCase(ASCIICode, shiftFactor) {
-  if (ASCIICode + shiftFactor > 90) {
-    const overflow = ASCIICode + shiftFactor - 90;
-    const cipheredASCIICode = 64 + overflow;
-    const cipheredLetter = String.fromCharCode(cipheredASCIICode);
-    return cipheredLetter;
-  } else {
-    const cipheredASCIICode = ASCIICode + shiftFactor;
-    const cipheredLetter = String.fromCharCode(cipheredASCIICode);
-    return cipheredLetter;
+function shiftedCharacter(ASCIICode, shiftFactor, ASCIIStart, ASCIIEnd) {
+  const cipheredASCIICode = ASCIICode + shiftFactor;
+  if (cipheredASCIICode > ASCIIEnd) {
+    const overflow = cipheredASCIICode - ASCIIEnd;
+    return String.fromCharCode(ASCIIStart + overflow - 1);
   }
-}
 
-function cipherLowerCase(ASCIICode, shiftFactor) {
-  if (ASCIICode + shiftFactor > 122) {
-    const overflow = ASCIICode + shiftFactor - 122;
-    const cipheredASCIICode = 96 + overflow;
-    const cipheredLetter = String.fromCharCode(cipheredASCIICode);
-    return cipheredLetter;
-  } else {
-    const cipheredASCIICode = ASCIICode + shiftFactor;
-    const cipheredLetter = String.fromCharCode(cipheredASCIICode);
-    return cipheredLetter;
-  }
+  return String.fromCharCode(cipheredASCIICode);
 }
 
 function analyzeArray(array) {
   if (array.length === 0) {
     throw new Error("Array cannot be empty.");
   }
-  const analysisObject = {};
 
   const sum = array.reduce((sum, num) => sum + num, 0);
-  const average = sum / array.length;
-  analysisObject["average"] = average;
 
-  const min = Math.min(...array);
-  analysisObject["min"] = min;
-
-  const max = Math.max(...array);
-  analysisObject["max"] = max;
-
-  const length = array.length;
-  analysisObject["length"] = length;
-
-  return analysisObject;
+  return {
+    average: sum / array.length,
+    min: Math.min(...array),
+    max: Math.max(...array),
+    length: array.length,
+  };
 }
 
 export { capitalize, reverseString, calculator, caesarCipher, analyzeArray };

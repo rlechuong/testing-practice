@@ -27,6 +27,10 @@ describe("capitalize", () => {
   test("should return the same string if already capitalized", () => {
     expect(capitalize("Chicken")).toBe("Chicken");
   });
+
+  test("should handle strings starting with non-alphabetical characters", () => {
+    expect(capitalize("9chicken")).toBe("9chicken");
+  });
 });
 
 describe("reverseString", () => {
@@ -112,6 +116,14 @@ describe("caesarCipher", () => {
 
   test("should handle large shift factors", () => {
     expect(caesarCipher("abc", 69)).toBe("rst");
+  });
+
+  test("should handle shift factor of 0", () => {
+    expect(caesarCipher("abc", 0)).toBe("abc");
+  });
+
+  test("should handle negative shift factors", () => {
+    expect(caesarCipher("abc", -1)).toBe("zab");
   });
 });
 
