@@ -84,4 +84,24 @@ describe("caesarCipher", () => {
   test("should shift string by the shift factor", () => {
     expect(caesarCipher("abc", 1)).toBe("bcd");
   });
+
+  test("should shift different string by the shift factor", () => {
+    expect(caesarCipher("abc", 3)).toBe("def");
+  });
+
+  test("should shift different string by the shift factor with wrapping", () => {
+    expect(caesarCipher("xyz", 3)).toBe("abc");
+  });
+
+  test("should follow the original lettercase when shifting", () => {
+    expect(caesarCipher("HeLLo", 3)).toBe("KhOOr");
+  });
+
+  test("should follow the original lettercase when shifting with wrapping", () => {
+    expect(caesarCipher("XYZ", 3)).toBe("ABC");
+  });
+
+  test("should not change punctuation, spaces, or non-alphabetical characters", () => {
+    expect(caesarCipher("Hello, World!", 3)).toBe("Khoor, Zruog!");
+  });
 });
