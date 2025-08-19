@@ -29,13 +29,14 @@ const calculator = {
 };
 
 function caesarCipher(string, shiftFactor) {
+  const moduloShiftFactor = shiftFactor % 26;
   let cipheredWord = "";
   for (let i = 0; i < string.length; i++) {
     const ASCIICode = string.charCodeAt(i);
     if (ASCIICode >= 97 && ASCIICode <= 122) {
-      cipheredWord += cipherLowerCase(ASCIICode, shiftFactor);
+      cipheredWord += cipherLowerCase(ASCIICode, moduloShiftFactor);
     } else if (ASCIICode >= 65 && ASCIICode <= 90) {
-      cipheredWord += cipherUpperCase(ASCIICode, shiftFactor);
+      cipheredWord += cipherUpperCase(ASCIICode, moduloShiftFactor);
     } else {
       cipheredWord += string.charAt(i);
     }
@@ -70,4 +71,26 @@ function cipherLowerCase(ASCIICode, shiftFactor) {
   }
 }
 
-export { capitalize, reverseString, calculator, caesarCipher };
+function analyzeArray(array) {
+  if (array.length === 0) {
+    throw new Error("Array cannot be empty.");
+  }
+  const analysisObject = {};
+
+  const sum = array.reduce((sum, num) => sum + num, 0);
+  const average = sum / array.length;
+  analysisObject["average"] = average;
+
+  const min = Math.min(...array);
+  analysisObject["min"] = min;
+
+  const max = Math.max(...array);
+  analysisObject["max"] = max;
+
+  const length = array.length;
+  analysisObject["length"] = length;
+
+  return analysisObject;
+}
+
+export { capitalize, reverseString, calculator, caesarCipher, analyzeArray };

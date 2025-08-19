@@ -4,6 +4,7 @@ import {
   reverseString,
   calculator,
   caesarCipher,
+  analyzeArray,
 } from "./functions.js";
 
 describe("capitalize", () => {
@@ -103,5 +104,55 @@ describe("caesarCipher", () => {
 
   test("should not change punctuation, spaces, or non-alphabetical characters", () => {
     expect(caesarCipher("Hello, World!", 3)).toBe("Khoor, Zruog!");
+  });
+
+  test("should handle empty strings", () => {
+    expect(caesarCipher("", 9)).toBe("");
+  });
+
+  test("should handle large shift factors", () => {
+    expect(caesarCipher("abc", 69)).toBe("rst");
+  });
+});
+
+describe("analyzeArray", () => {
+  test("should return object with average, min, max, and length for an array", () => {
+    expect(analyzeArray([1, 8, 3, 4, 2, 6])).toEqual({
+      average: 4,
+      min: 1,
+      max: 8,
+      length: 6,
+    });
+  });
+
+  test("should return object with average, min, max, and length for a different array", () => {
+    expect(analyzeArray([2, 4, 6, 8, 10])).toEqual({
+      average: 6,
+      min: 2,
+      max: 10,
+      length: 5,
+    });
+  });
+
+  test("should throw an error if an empty array is passed", () => {
+    expect(() => analyzeArray([])).toThrow("Array cannot be empty.");
+  });
+
+  test("should handle an array with one element", () => {
+    expect(analyzeArray([9])).toEqual({
+      average: 9,
+      min: 9,
+      max: 9,
+      length: 1,
+    });
+  });
+
+  test("should handle an array with negative numbers", () => {
+    expect(analyzeArray([-3, -6, -9])).toEqual({
+      average: -6,
+      min: -9,
+      max: -3,
+      length: 3,
+    });
   });
 });
